@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>QR Code Generator</title>
+    <title>Advanced QR Generator</title>
     <style>
         body { background-color: #0d1117; color: white; font-family: Arial; text-align: center; padding-top: 50px; }
         .box { background: #161b22; padding: 30px; border-radius: 10px; display: inline-block; width: 90%; max-width: 500px; border: 1px solid #30363d;}
@@ -16,15 +16,15 @@
 </head>
 <body>
     <div class="box">
-        <h1>QR Code Generator</h1>
-        <p style="color: #8b949e;">Koi bhi link ya text daalein, uska QR banayein.</p>
+        <h1>Image & Text QR Generator</h1>
+        <p style="color: #8b949e;">Kisi Image ka link, YouTube link, ya text daalein.</p>
         
-        <input type="text" id="textInput" placeholder="Yahan link ya text likhein...">
+        <input type="text" id="textInput" placeholder="https://example.com/image.jpg">
         <br>
         <button onclick="generateQR()">Generate QR</button>
         
         <div id="qrResult">
-            <p>Apna QR scan karein:</p>
+            <p style="margin-top: 20px; color: #2ed573;">Scan karein:</p>
             <img id="qrImage" src="" alt="QR Code">
         </div>
         
@@ -35,11 +35,11 @@
         function generateQR() {
             let text = document.getElementById('textInput').value;
             if(text === "") {
-                alert("Bhai, pehle kuch text ya link daalo!");
+                alert("Bhai, pehle koi link ya text daalo!");
                 return;
             }
-            // Ye API humein text ka QR code image bana kar dega
-            let qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(text);
+            // Ye API humein sundar aur scan karne layak QR image dega
+            let qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(text);
             
             document.getElementById('qrImage').src = qrUrl;
             document.getElementById('qrResult').style.display = 'block';
