@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Generator</title>
+    <style>
+        body { background-color: #0d1117; color: white; font-family: 'Segoe UI', Arial; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #161b22; padding: 30px; border-radius: 12px; width: 90%; max-width: 450px; text-align: center; border: 1px solid #30363d; box-shadow: 0 4px 15px rgba(0,0,0,0.5);}
+        h1 { color: #00d2ff; margin-bottom: 20px;}
+        .result-box { 
+            background: #0d1117; 
+            padding: 15px; 
+            border-radius: 8px; 
+            border: 1px solid #30363d; 
+            font-size: 20px; 
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            color: #2ed573;
+            word-wrap: break-word;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .copy-btn { background: #00d2ff; border: none; color: black; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px;}
+        .copy-btn:hover { background: #3a7bd5; color: white;}
+        button.gen-btn { background: #238636; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; font-weight: bold; margin-bottom: 15px; transition: 0.3s;}
+        button.gen-btn:hover { background: #2ea043; }
+        input[type="range"] { width: 80%; margin: 10px 0;}
+        .options { display: flex; justify-content: center; gap: 15px; font-size: 14px; color: #8b949e; margin-bottom: 20px;}
+        a { color: #c9d1d9; text-decoration: none; font-size: 14px;}
+        a:hover { color: #00d2ff; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Password Generator</h1>
+        
+        <div class="result-box">
+            <span id="passwordDisplay">Select length...</span>
+            <button class="copy-btn" onclick="copyPassword()">Copy</button>
+        </div>
+
+        <div>
+            <label>Length: <span id="lengthVal">12</span></label><br>
+            <input type="range" id="lengthSlider" min="6" max="30" value="12" oninput="document.getElementById('lengthVal').innerText = this.value">
+        </div>
+
+        <button class="gen-btn" onclick="generatePassword()">Generate Strong Password</button>
+
+        <a href="index.html">← Back to Home</a>
+    </div>
+
+    <script>
+        function generatePassword() {
+            let length = document.getElementById('lengthSlider').value;
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+            let password = "";
+            
+            for (let i = 0; i < length; i++) {
+                let randomNumber = Math.floor(Math.random() * chars.length);
+                password += chars.substring(randomNumber, randomNumber + 1);
+            }
+            
+            document.getElementById('passwordDisplay').innerText = password;
+        }
+
+        function copyPassword() {
+            let password = document.getElementById('passwordDisplay').innerText;
+            if(password === "Select length...") return;
+            
+            navigator.clipboard.writeText(password).then(() => {
+                alert("Password Copied!");
+            });
+        }
+    </script>
+</body>
+</html>
