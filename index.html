@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Smart Study Tools</title>
+    <title>Smart Text Summarizer</title>
     <style>
         body {
-            background-color: #121212;
+            background-color: #0d1117;
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,173 +15,117 @@
             padding: 20px;
         }
         .container {
+            background-color: #161b22;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
             width: 100%;
-            max-width: 450px;
+            max-width: 600px;
+            border: 1px solid #30363d;
         }
-        .card {
-            background-color: #1e1e24;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        h1 {
+            color: #58a6ff;
+            text-align: center;
             margin-bottom: 20px;
+            font-size: 24px;
         }
-        h2 {
-            color: #00d2ff;
-            text-align: center;
-            margin-top: 0;
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-size: 16px;
+            resize: vertical;
+            margin-bottom: 15px;
+            box-sizing: border-box;
         }
-        /* Timer ka design */
-        #timer-display {
-            font-size: 50px;
-            font-weight: bold;
-            text-align: center;
-            color: #ff4757;
-            margin: 20px 0;
-            font-family: monospace;
-        }
-        .btn-group {
-            display: flex;
-            justify-content: space-between;
+        textarea:focus {
+            outline: none;
+            border-color: #58a6ff;
         }
         button {
-            padding: 10px 15px;
+            width: 100%;
+            padding: 12px;
+            background-color: #238636;
+            color: white;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            width: 30%;
             transition: 0.3s;
         }
-        .start { background-color: #2ed573; color: white; }
-        .stop { background-color: #ff4757; color: white; }
-        .reset { background-color: #747d8c; color: white; }
-        
-        /* To-Do List ka design */
-        .input-group {
-            display: flex;
-            margin-bottom: 15px;
+        button:hover {
+            background-color: #2ea043;
         }
-        input[type="text"] {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px 0 0 8px;
-            border: 1px solid #444;
-            background-color: #121212;
-            color: white;
-            font-size: 16px;
-        }
-        .add-btn {
-            padding: 10px 15px;
-            background-color: #00d2ff;
-            color: black;
-            border-radius: 0 8px 8px 0;
-            width: auto;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            background-color: #2b2b36;
-            padding: 12px;
-            margin-bottom: 8px;
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
             border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: #c9d1d9;
+            display: none;
+            line-height: 1.6;
         }
-        .delete-btn {
-            background-color: transparent;
-            color: #ff4757;
-            font-size: 20px;
-            padding: 0;
-            width: auto;
+        .label {
+            color: #8b949e;
+            font-size: 14px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Timer Section -->
-        <div class="card">
-            <h2>Study Timer</h2>
-            <div id="timer-display">25:00</div>
-            <div class="btn-group">
-                <button class="start" onclick="startTimer()">Start</button>
-                <button class="stop" onclick="stopTimer()">Pause</button>
-                <button class="reset" onclick="resetTimer()">Reset</button>
-            </div>
-        </div>
-
-        <!-- To-Do List Section -->
-        <div class="card">
-            <h2>Aaj Ka Task (To-Do)</h2>
-            <div class="input-group">
-                <input type="text" id="taskInput" placeholder="Naya task likhein...">
-                <button class="add-btn" onclick="addTask()">+</button>
-            </div>
-            <ul id="taskList">
-                <!-- Tasks yahan aayenge -->
-            </ul>
+        <h1>📝 Smart Summarizer</h1>
+        <p style="color: #8b949e; font-size: 14px; text-align: center;">Lamba text daalein, hum usko chhota kar denge!</p>
+        
+        <textarea id="inputText" placeholder="Yahan apna lamba paragraph ya notes paste karein..."></textarea>
+        
+        <button onclick="summarizeText()">Summarize (Chhota Karein)</button>
+        
+        <div id="result">
+            <div class="label">Aapka Summary:</div>
+            <p id="summaryOutput"></p>
         </div>
     </div>
 
     <script>
-        // --- Timer Logic ---
-        let time = 25 * 60; // 25 minute
-        let timerInterval;
-        const timerDisplay = document.getElementById('timer-display');
-
-        function updateDisplay() {
-            let minutes = Math.floor(time / 60);
-            let seconds = time % 60;
-            timerDisplay.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }
-
-        function startTimer() {
-            if (timerInterval) return; // Agar pehle se chal raha hai toh kuch mat karo
-            timerInterval = setInterval(() => {
-                if (time > 0) {
-                    time--;
-                    updateDisplay();
-                } else {
-                    clearInterval(timerInterval);
-                    alert("Time's up! Take a break.");
-                }
-            }, 1000);
-        }
-
-        function stopTimer() {
-            clearInterval(timerInterval);
-            timerInterval = null;
-        }
-
-        function resetTimer() {
-            stopTimer();
-            time = 25 * 60;
-            updateDisplay();
-        }
-
-        // --- To-Do List Logic ---
-        function addTask() {
-            const input = document.getElementById('taskInput');
-            const taskText = input.value.trim();
+        function summarizeText() {
+            let text = document.getElementById('inputText').value;
             
-            if (taskText !== "") {
-                const ul = document.getElementById('taskList');
-                const li = document.createElement('li');
-                
-                li.innerHTML = `
-                    <span>${taskText}</span>
-                    <button class="delete-btn" onclick="this.parentElement.remove()">✖</button>
-                `;
-                
-                ul.appendChild(li);
-                input.value = ""; // Input box khali karo
+            if (text.length < 50) {
+                alert("Bhai, kam se kam 50 akshar ka text toh daalo!");
+                return;
             }
+
+            // Text ko sentences mein todna (full stop, question mark, exclamation mark se)
+            let sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+            
+            // Har sentence ke words count karna
+            let scoredSentences = sentences.map(sentence => {
+                let words = sentence.trim().split(/\s+/).length;
+                return { text: sentence.trim(), score: words };
+            });
+
+            // Sentences ko unke word count ke hisaab se sort karna (bade sentences upar)
+            scoredSentences.sort((a, b) => b.score - a.score);
+
+            // Top 3 sabse bade sentences uthana
+            let topSentences = scoredSentences.slice(0, 3).map(s => s.text);
+
+            // Unko wapas original order mein lana (optional, par padhne mein acha lagta hai)
+            let finalSummary = topSentences.join(" ");
+
+            // Result dikhana
+            document.getElementById('summaryOutput').innerText = finalSummary;
+            document.getElementById('result').style.display = 'block';
         }
     </script>
 
 </body>
-    </html>
+</html>
