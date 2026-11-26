@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Summarizer</title>
+    <style>
+        body { background-color: #0d1117; color: white; font-family: Arial; text-align: center; padding-top: 50px; }
+        .box { background: #161b22; padding: 30px; border-radius: 10px; display: inline-block; width: 90%; max-width: 600px; border: 1px solid #30363d;}
+        textarea { width: 100%; height: 200px; margin: 20px 0; background: #0d1117; color: white; padding: 10px; border-radius: 5px; border: 1px solid #30363d;}
+        button { background: #238636; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;}
+        button:hover { background: #2ea043; }
+        h1 { color: #58a6ff; }
+        #res { display: none; margin-top: 20px; text-align: left; background: #0d1117; padding: 15px; border-radius: 5px; border: 1px solid #30363d;}
+        a { color: #c9d1d9; display: block; margin-top: 20px; text-decoration: none;}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Smart Summarizer</h1>
+        <textarea id="inputText" placeholder="Yahan lamba paragraph paste karein..."></textarea>
+        <button onclick="summarize()">Summarize Now</button>
+        <div id="res"><b>Summary:</b> <br><br> <span id="out"></span></div>
+        <a href="index.html">← Back to Home</a>
+    </div>
+    <script>
+        function summarize() {
+            let text = document.getElementById('inputText').value;
+            if (text.length < 50) return alert("Please enter a longer text.");
+            let sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+            let sorted = sentences.map(s => ({text: s.trim(), len: s.split(' ').length}))
+                                  .sort((a, b) => b.len - a.len);
+            let final = sorted.slice(0, 3).map(s => s.text).join(" ");
+            document.getElementById('out').innerText = final;
+            document.getElementById('res').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
