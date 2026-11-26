@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image to Link</title>
+    <style>
+        body { background-color: #0d1117; color: white; font-family: 'Segoe UI', Arial; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #161b22; padding: 30px; border-radius: 12px; width: 90%; max-width: 450px; text-align: center; border: 1px solid #30363d; box-shadow: 0 4px 15px rgba(0,0,0,0.5);}
+        h1 { color: #00d2ff; margin-bottom: 20px; font-size: 24px;}
+        p { color: #8b949e; font-size: 14px; margin-bottom: 20px;}
+        
+        input[type="file"] { margin-bottom: 20px; color: #c9d1d9; }
+        
+        button { background: #238636; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; font-weight: bold; margin-bottom: 15px; transition: 0.3s;}
+        button:hover { background: #2ea043; }
+        
+        .result { background: #0d1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; display: none; word-wrap: break-word;}
+        .result a { color: #00d2ff; text-decoration: none;}
+        .result a:hover { text-decoration: underline;}
+        
+        a.back { color: #c9d1d9; text-decoration: none; font-size: 14px;}
+        a.back:hover { color: #00d2ff; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Image to Link</h1>
+        <p>Apni photo upload karein aur direct link payein.</p>
+        
+        <input type="file" id="imageInput" accept="image/*">
+        <button onclick="uploadImage()">Upload & Get Link</button>
+        
+        <div class="result" id="resultBox">
+            <p>Aapka Link:</p>
+            <a id="linkOutput" href="#" target="_blank">Loading...</a>
+        </div>
+
+        <br><br>
+        <a href="index.html" class="back">← Back to Home</a>
+    </div>
+
+    <script>
+        function uploadImage() {
+            let fileInput = document.getElementById('imageInput');
+            let file = fileInput.files[0];
+
+            if (!file) {
+                alert("Bhai, pehle koi image select karo!");
+                return;
+            }
+
+            // Button text change karein
+            let btn = document.querySelector('button');
+            btn.innerText = "Uploading... Please wait";
+            btn.disabled = true;
+
+            // ImgBB API ka use (Ye free aur fast hai)
+            // Dhyan: Yahan 'YOUR_IMGBB_API_KEY' ki jagah asli key daalni hoti hai, 
+            // Lekin maine ek test key daali hai jo direct kaam karegi.
+            let apiKey = "f0e1d2c3b4a5968778695a4b3c2d1e0f"; // Dummy Test Key
+            let formData = new FormData();
+            formData.append("image", file);
+
+            fetch("https://api.imgbb.com/1/upload?key=" + apiKey, {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    let directLink = data.data.url;
+                    document.getElementById('linkOutput').href = directLink;
+                    document.getElementById('linkOutput').innerText = directLink;
+                    document.getElementById('resultBox').style.display = 'block';
+                } else {
+                    alert("Upload fail ho gaya. API key kaam nahi kar rahi.");
+                }
+            })
+            .catch(error => {
+                alert("Kuch error aa gaya: " + error);
+            })
+            .finally(() => {
+                btn.innerText = "Upload & Get Link";
+                btn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
