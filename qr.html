@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Generator</title>
+    <style>
+        body { background-color: #0d1117; color: white; font-family: Arial; text-align: center; padding-top: 50px; }
+        .box { background: #161b22; padding: 30px; border-radius: 10px; display: inline-block; width: 90%; max-width: 500px; border: 1px solid #30363d;}
+        input { width: 90%; padding: 10px; margin: 20px 0; background: #0d1117; color: white; border-radius: 5px; border: 1px solid #30363d; font-size: 16px;}
+        button { background: #00d2ff; color: black; font-weight: bold; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #3a7bd5; color: white; }
+        h1 { color: #00d2ff; }
+        #qrResult { margin-top: 20px; display: none; }
+        img { border: 5px solid white; border-radius: 10px; }
+        a { color: #c9d1d9; display: block; margin-top: 20px; text-decoration: none;}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>QR Code Generator</h1>
+        <p style="color: #8b949e;">Koi bhi link ya text daalein, uska QR banayein.</p>
+        
+        <input type="text" id="textInput" placeholder="Yahan link ya text likhein...">
+        <br>
+        <button onclick="generateQR()">Generate QR</button>
+        
+        <div id="qrResult">
+            <p>Apna QR scan karein:</p>
+            <img id="qrImage" src="" alt="QR Code">
+        </div>
+        
+        <a href="index.html">← Back to Home</a>
+    </div>
+
+    <script>
+        function generateQR() {
+            let text = document.getElementById('textInput').value;
+            if(text === "") {
+                alert("Bhai, pehle kuch text ya link daalo!");
+                return;
+            }
+            // Ye API humein text ka QR code image bana kar dega
+            let qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(text);
+            
+            document.getElementById('qrImage').src = qrUrl;
+            document.getElementById('qrResult').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
