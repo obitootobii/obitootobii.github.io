@@ -1,103 +1,184 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Web Tools</title>
+    <title>Obito's Toolbox</title>
     <style>
+        /* Basic Reset */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #0d1117; color: white; }
         
-        /* Navigation Bar */
+        /* Background with Animation */
+        body { 
+            background: linear-gradient(135deg, #090a0f 0%, #1a1a2e 100%); 
+            color: white; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Glowing Navigation Bar */
         nav {
-            background-color: #161b22;
+            background-color: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(10px);
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #30363d;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        nav h2 { color: #58a6ff; }
+        nav h2 { 
+            color: #58a6ff; 
+            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
+        }
         nav ul { display: flex; list-style: none; gap: 20px; }
         nav a { color: #c9d1d9; text-decoration: none; font-weight: bold; transition: 0.3s; }
-        nav a:hover { color: #58a6ff; }
+        nav a:hover { color: #58a6ff; text-shadow: 0 0 8px #58a6ff; }
 
-        /* Hero Section */
+        /* Animated Hero Section */
         .hero {
             text-align: center;
-            padding: 80px 20px;
-            background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
+            padding: 100px 20px;
+            position: relative;
         }
-        .hero h1 { font-size: 45px; color: white; margin-bottom: 10px; }
-        .hero p { color: #8b949e; font-size: 18px; margin-bottom: 30px; }
+        .hero h1 { 
+            font-size: 50px; 
+            color: white; 
+            margin-bottom: 15px; 
+            animation: fadeInDown 1s ease-out;
+            background: -webkit-linear-gradient(45deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p { 
+            color: #8b949e; 
+            font-size: 20px; 
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out;
+        }
 
-        /* Tools Grid */
+        /* Glowing Tool Cards */
         .tools-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
-            padding: 40px 20px;
+            gap: 30px;
+            padding: 20px;
+            animation: fadeIn 1.5s ease-out;
         }
         .tool-card {
-            background-color: #161b22;
+            background: rgba(22, 27, 34, 0.7);
             border: 1px solid #30363d;
-            border-radius: 10px;
-            padding: 30px;
+            border-radius: 15px;
+            padding: 35px 25px;
             width: 300px;
             text-align: center;
-            transition: 0.3s;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
         }
-        .tool-card:hover { border-color: #58a6ff; transform: translateY(-5px); }
-        .tool-card h3 { color: #58a6ff; margin-bottom: 15px; }
-        .tool-card p { color: #8b949e; margin-bottom: 20px; font-size: 14px; }
+        /* Glowing border effect on hover */
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, #58a6ff, transparent 30%);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: 0.5s;
+        }
+        .tool-card:hover::before { opacity: 1; }
+        .tool-card:hover { 
+            transform: translateY(-10px) scale(1.02); 
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
         
+        /* Card Content Wrapper (taaki background se bacha sake) */
+        .card-content {
+            position: relative;
+            z-index: 10;
+            background: #161b22;
+            padding: 20px;
+            border-radius: 10px;
+            height: 100%;
+        }
+
+        .tool-card h3 { color: #00d2ff; margin-bottom: 15px; font-size: 22px;}
+        .tool-card p { color: #8b949e; margin-bottom: 25px; font-size: 15px; line-height: 1.5;}
+        
+        /* Glowing Button */
         .btn {
             display: inline-block;
-            padding: 10px 20px;
-            background-color: #238636;
-            color: white;
+            padding: 12px 25px;
+            background: transparent;
+            color: #00d2ff;
             text-decoration: none;
-            border-radius: 5px;
+            border: 2px solid #00d2ff;
+            border-radius: 25px;
             font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
         }
-        .btn:hover { background-color: #2ea043; }
+        .btn:hover { 
+            background: #00d2ff; 
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.8);
+        }
 
         /* Footer */
-        footer { text-align: center; padding: 20px; background-color: #161b22; color: #8b949e; border-top: 1px solid #30363d; margin-top: 50px;}
+        footer { 
+            text-align: center; 
+            padding: 30px; 
+            color: #8b949e; 
+            border-top: 1px solid #30363d; 
+            margin-top: 80px;
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
     <nav>
-        <h2>Obito Tools</h2>
+        <h2>Obito's Toolbox</h2>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="#">About</a></li>
         </ul>
     </nav>
 
     <div class="hero">
-        <h1>Welcome to Obito's Toolbox</h1>
-        <p>Yahan aapko milenge kaam ke, fast aur free web tools.</p>
+        <h1>Next-Gen Web Tools</h1>
+        <p>Aapke daily kaam ko aasan banane ke liye smart tools.</p>
     </div>
 
     <div class="tools-container">
         <!-- Tool 1 -->
         <div class="tool-card">
-            <h3>Word Counter</h3>
-            <p>Apne text ke words aur characters turant ginein.</p>
-            <a href="counter.html" class="btn">Open Tool</a>
+            <div class="card-content">
+                <h3>Word Counter</h3>
+                <p>Apne text ke words aur characters turant ginein, bina kisi rukawat ke.</p>
+                <a href="counter.html" class="btn">Launch Tool</a>
+            </div>
         </div>
 
         <!-- Tool 2 -->
         <div class="tool-card">
-            <h3>Text Summarizer</h3>
-            <p>Lamba paragraph paste karein aur uska chhota summary payein.</p>
-            <a href="summarizer.html" class="btn">Open Tool</a>
+            <div class="card-content">
+                <h3>AI Summarizer</h3>
+                <p>Lamba paragraph paste karein aur seconds mein smart summary payein.</p>
+                <a href="summarizer.html" class="btn">Launch Tool</a>
+            </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 Obito Tools. Made with ❤️</p>
+        <p>© 2024 Obito's Toolbox | Built with ❤️ and Code</p>
     </footer>
 
 </body>
