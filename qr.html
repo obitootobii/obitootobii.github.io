@@ -33,17 +33,18 @@
 
     <script>
         function generateQR() {
-            let text = document.getElementById('textInput').value;
-            if(text === "") {
-                alert("Bhai, pehle koi link ya text daalo!");
-                return;
-            }
-            // Ye API humein sundar aur scan karne layak QR image dega
-            let qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(text);
-            
-            document.getElementById('qrImage').src = qrUrl;
-            document.getElementById('qrResult').style.display = 'block';
-        }
+    let text = document.getElementById('textInput').value;
+    if(text === "") {
+        alert("any link or text type  here!");
+        return;
+    }
+    
+    // Naya aur reliable API (api.qrserver ki jagah)
+    let qrUrl = "https://quickchart.io/qr?text=" + encodeURIComponent(text) + "&size=300";
+    
+    document.getElementById('qrImage').src = qrUrl;
+    document.getElementById('qrResult').style.display = 'block';
+}
     </script>
 </body>
 </html>
