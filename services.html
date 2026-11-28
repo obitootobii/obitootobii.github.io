@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Services - Obito</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #090a0f 0%, #1a1a2e 100%); color: white; min-height: 100vh; }
+        
+        nav {
+            background-color: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+        nav h2 { color: #58a6ff; text-shadow: 0 0 10px rgba(88, 166, 255, 0.5); }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav a { color: #c9d1d9; text-decoration: none; font-weight: bold; transition: 0.3s; }
+        nav a:hover { color: #58a6ff; }
+
+        .container { max-width: 900px; margin: 50px auto; padding: 20px; text-align: center;}
+        h1 { color: #00d2ff; font-size: 40px; margin-bottom: 10px; }
+        .subtitle { color: #8b949e; margin-bottom: 50px; font-size: 18px; }
+
+        .services-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .service-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 15px;
+            padding: 30px;
+            width: 280px;
+            text-align: left;
+            transition: 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: #00d2ff;
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2);
+        }
+        .service-card h3 { color: #00d2ff; margin-bottom: 15px; font-size: 20px;}
+        .service-card p { color: #c9d1d9; font-size: 15px; line-height: 1.6; margin-bottom: 20px;}
+        .price { color: #2ed573; font-weight: bold; font-size: 24px; display: block; margin-bottom: 20px;}
+        
+        .contact-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #238636;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .contact-btn:hover { background: #2ea043; }
+
+        footer { text-align: center; padding: 20px; color: #8b949e; margin-top: 80px; border-top: 1px solid #30363d;}
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>Obito's Toolbox</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Meri Services</h1>
+        <p class="subtitle">Main aapke business ko AI aur Website se aage badhata hoon.</p>
+
+        <div class="services-grid">
+            <!-- Service 1 -->
+            <div class="service-card">
+                <h3>AI Chatbot</h3>
+                <p>Aapki website ya WhatsApp ke liye AI bot jo 24/7 customer ke sawaalon ka turant jawab dega.</p>
+                <span class="price">₹5,000 / month</span>
+                <a href="#" class="contact-btn">Book Now</a>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="service-card">
+                <h3>Business Website</h3>
+                <p>Aapki dukaan ya business ke liye ek fast, modern aur mobile-friendly website.</p>
+                <span class="price">₹3,000 - ₹8,000</span>
+                <a href="#" class="contact-btn">Book Now</a>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="service-card">
+                <h3>WhatsApp Reminder</h3>
+                <p>Customers ko unke orders, appointments ya bill ki yaad dilane ka automatic system.</p>
+                <span class="price">₹2,000 / month</span>
+                <a href="#" class="contact-btn">Book Now</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Obito's Toolbox | Made with ❤️</p>
+    </footer>
+
+</body>
+</html>
